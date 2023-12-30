@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="bootstrap.min.css">     <!--  ------- bootstrap css --------- -->
+
+</head>
+<body class="container mt-4">
+    <h2 class="mb-4">Enter Transformer Parameters:</h2>
+
+    <!-- Transformer Rating (value of S) -->
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <label for="transformerRating">Transformer Rating (S): </label>
+        </div>
+        <div class="col-md-6">
+            <input type="text" class="form-control" id="transformerRating">
+        </div>
+    </div>
+
+    <!-- Power Factor (pf) -->
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <label for="powerFactor">Power Factor (pf): </label>
+        </div>
+        <div class="col-md-6">
+            <input type="text" class="form-control" id="powerFactor">
+        </div>
+    </div>
+
+    <!-- Load Capacity (k) -->
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <label for="loadCapacity">Load Capacity (k): </label>
+        </div>
+        <div class="col-md-6">
+            <input type="text" class="form-control" id="loadCapacity">
+        </div>
+    </div>
+
+    <!-- Turns Ratio (a) -->
+    <!-- <div class="row mb-3">
+        <div class="col-md-3">
+            <label for="turnsRatio">Turns Ratio (a): </label>
+        </div>
+        <div class="col-md-6">
+            <input type="text" class="form-control" id="turnsRatio">
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-primary" onclick="getEff()">Calculate</button>
+        </div>
+    </div> -->
+
+    <!-- Copper Loss (Pcu) -->
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <label for="copperLoss">Copper Loss (Pcu): </label>
+        </div>
+        <div class="col-md-6">
+            <input type="text" class="form-control" id="copperLoss">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <label for="ironLoss">Iron Loss (Pi): </label>
+        </div>
+        <div class="col-md-6">
+            <input type="text" class="form-control" id="ironLoss">
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-primary" onclick="getEff()">Calculate</button>
+        </div>
+    </div>
+
+
+
+<!-- Include Bootstrap JS and Popper.js -->
+<script src="bootstrap.bundle.min.js"></script>     <!-- ------ bootstrap js --------- -->
+
+
+<script src="main.js"></script>   
+</body>
+</html>
