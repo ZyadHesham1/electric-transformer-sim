@@ -1,94 +1,202 @@
-// var e1, e2, n1, n2, f, R1, R2, phiMax; //initializing variables for ideal
+//  function getData(){
+//     var sFL = parseFloat($("#transformerRating").val()); 
+//     var pf = parseFloat($("#powerFactor").val());
+//     var k = parseFloat($("#loadCapacity").val());
+//     var PcuFL = parseFloat($("#copperLoss").val());
+//     var Pi = parseFloat($("#ironLoss").val());
 
-// var Rm, Xm, Qm, Im, If, Io, Ip, Xp, Rp;     //initializing vars for practical transformer
-
-// var eL1, eL2, phiL1, phiL2;                 //initializing variables for leakage
-
-// var sFL, So, P, Pi, Pcu, PcuFL,  Po, pf, k, eff, effMax;    //initializing power & efficiency variables
-
-
-
-// done testing
-
-// Ideal Transformer Equations
-// let a = n1 / n2;
-// let e1 = 4.44 * f * n1 * phiMax;
-// let effectiveVoltage = e1;
-// let peakVoltage = effectiveVoltage * Math.sqrt(2);
-
-// // Practical Transformer at No Load Equations
-// let Rm = e1 ** 2 / Pi;
-// let Xm = e1 ** 2 / Qm;
-// let Qm = Math.sqrt(S ** 2 - Pi ** 2);
-// let Im = e1 / Xm;
-// let If = e1 / Rm;
-// let Io = Math.sqrt(Im ** 2 + If ** 2);
-// let S = e1 * Io;
-
-// // Leakage Equations
-// let EL2 = 4.44 * f * n2 * phiL2;
-// let e2 = 4.44 * f * n2 * Phi;
-
-// // Open Circuit Test Equations
-// let Rm_OC = e1 ** 2 / Pi;
-// let P_OC = e1 ** 2 / R;
-// let Xm_OC = e1 ** 2 / Qm;
-// let Sm_OC = Io * e1;
-// let Qm_OC = Math.sqrt(Sm_OC ** 2 - Pi ** 2);
-
-// // Short Circuit Test Equations
-// let Xp = Xl1 + a ** 2 * Xl2;
-// let Rp = R1 + a ** 2 * R2;
-// let Zp = Rp + i * Xp;
-// let Rp_SC = Psc / Isc ** 2;
-// let Xp_SC = Math.sqrt(Zp ** 2 - Rp_SC ** 2);
-
-// // Efficiency Equations
-
-// let Po = sFL * k * pf;
-// let Pcu = k ** 2 * PcuFL;
-// let k = prompt("Full load? half?:");
-// let effMax = (k = Math.sqrt(Pi / PcuFL)) && (Pi = PcuFL);
-// let eff = Po / (Po + Pi + Pcu);
-// let PcuFL = IpFL ** 2 * Rp;
+//     getEff(sFL, pf, k, PcuFL, Pi);
+//     alert(sFL);
+//  }
+ 
+//  function getEff(sFL, pf, k, PcuFL, Pi) {
+//     // Retrieve values from input elements 
 
 
+//     let Po = sFL * k * pf; // Equation used, eq(3) from our report
+//     let Pcu = PcuFL;
 
+//     if (k != 1) {
+//         Pcu = k ** 2 * PcuFL;
+//     }
+        
+        // alert("sFL:", sFL);
+        // alert("pf:", pf);
+        // alert("k:", k);
+        // alert("PcuFL:", PcuFL);
+        // alert("Pi:", Pi);
+        // alert("Po:", Po);
+        // alert("Pcu:", Pcu);
 
-// function getEff(Pcu, k, PcuFL, sFL, pf, Pi){
-    
-//     let Po = sFL * k * pf;
-//     Pcu = k ** 2 * PcuFL;
-//     eff = Po/(Po + Pi + Pcu);
-
-//     return eff;
+//     let eff = (Po / (Po + Pi + Pcu)) * 100;
+//     alert("Efficiency is " + eff.toFixed(2) + "%"); // Print the efficiency of the transformer
 // }
 
-function getEff() {
+class Transformer {
+    constructor() {
+        this.data = {};
+
+    }
+
+    getData() {
+        this.data.sFL = parseFloat($("#transformerRating").val());
+        this.data.pf = parseFloat($("#powerFactor").val());
+        this.data.k = parseFloat($("#loadCapacity").val());
+        this.data.PcuFL = parseFloat($("#copperLoss").val());
+        this.data.Pi = parseFloat($("#ironLoss").val());
+        this.data.turns = parseFloat($("#turns").val());
+        this.data.v1 = parseFloat($("#v1").val());
+        this.data.v2 = parseFloat($("#v2").val());
+        this.data.r1 = parseFloat($("#r1").val());
+        this.data.r2 = parseFloat($("#r2").val());
+        this.data.effIn = parseFloat($("#effIn").val()); 
+        this.data.fq = parseFloat($("#fq").val()); 
+        this.data.Po = parseFloat($("#Po").val()); 
+        this.data.i1 = parseFloat($("#i1").val()); 
+        this.data.i2 = parseFloat($("#i2").val()); 
+        this.data.Io = parseFloat($("#Io").val());   
+    }
+
+    getEff() {
+        
+        // Access data from the instance
+        let sFL = this.data.sFL;
+        let pf = this.data.pf;
+        let k = this.data.k;
+        let PcuFL = this.data.PcuFL;
+        let Pi = this.data.Pi;
+        let Pcu = this.data.PcuFL;
+
+        if (k !== 1) {
+            Pcu = k ** 2 * PcuFL;
+        }
+
+        let Po  = this.data.sFL * k * pf;
+        let effCalc = (Po / (Po + Pi + Pcu)) * 100;     // Equation used, eq(3) from our report
+        
+        alert("Efficiency is " + effCalc.toFixed(3) + "%");
+        alert(sFL);
+    }
+
+    getRatio(){
+        let v1 = this.data.v1;
+        let v2 = this.data.v2;
+
+        let a = v1/v2;
+        return a;
+    }
+
+    getEffMax() {
     // Retrieve values from input elements
-    var sFL = parseFloat(document.getElementById("transformerRating").value);
-    var pf = parseFloat(document.getElementById("powerFactor").value);
-    var k = parseFloat(document.getElementById("loadCapacity").value);
-    var PcuFL = parseFloat(document.getElementById("copperLoss").value);
-    var Pi =parseFloat(document.getElementById("ironLoss").value);
+    let sFL = this.data.sFL;
+    let pf = this.data.pf;
+    let k = this.data.k;
+    let PcuFL = this.data.PcuFL;
+    let Pi = this.data.Pi;
 
-     let Po = sFL * k * pf;
-     let Pcu = PcuFL;
-     if (k != 1){
-        Pcu = k ** 2 * PcuFL;
-     }
-     let eff = (Po/(Po + Pi + Pcu)) * 100;
+    // Calculate Po, Pcu, and Efficiency (ηMax)
+    let Po = sFL * k * pf;
+    let Pcu = k !== 1 ? k ** 2 * PcuFL : PcuFL;
+    let effMax = (Po / (Po + Pi + Pcu)) * 100;
+
+    // Display the result or use it as needed
+    alert("Maximum Efficiency is " + effMax.toFixed(2) + "%");
+}
+
+// Method to calculate Current
+getCurrent() {
+    // Retrieve values from input elements
+    let a = this.data.turns;
+    let Io = this.data.Io;
+    let pf = this.data.pf;
+    let i2 = this.data.i2;
+
+    // Calculate Current (If)
+    let I21 = i2 * (a ** -1);
+
+    //let If = sFL / (k * PcuFL);
+
+    // Display the result or use it as needed
+    // alert("Current is " + If.toFixed(2) + " A");
 
 
-
-    //  console.log(sFL);
-    //  console.log(pf);
-    //  console.log(k);
-    //  console.log(PcuFL);
-    //  console.log(Pi);
-     console.log("efficiency is " + eff.toFixed(2) + "%");
+    // Define a function for complex addition
+    const complexAddition = (I21, Io) => ({ real: I21.real + Io.real, imag: I21.imag + Io.imag });
 
 
+    // Perform complex addition
+    const result = complexAddition(complexNum1, complexNum2);
+
+    // Display the result using template literals
+    console.log(`Result of complex addition: ${result.real} + ${result.imag}i`);
 
 
-   }
+}
+
+// Method to calculate Power Losses (Pcu, Pi)
+getPowerLosses() {
+    // Retrieve values from input elements
+    let pf = this.data.pf;
+    let k = this.data.k;
+    let PcuFL = this.data.PcuFL;
+    let Pi = this.data.Pi;
+    let Po = this.data.Po;
+    let v1 = this.data.v1;
+    let v2 = this.data.v2;
+    let i1= this.data.i1;
+
+    // Calculate Po, Pcu, and Efficiency (η)
+    let Pin = v1 * i1 * pf;
+    let Pcu = Pin - Po - Pi;
+    // let eff = (Po / (Po + Pi + Pcu));
+
+    // // Calculate Power Losses (Pcu, Pi)
+    // let PcuLoss = eff * Pcu;
+    // let PiLoss = eff * Pi;
+
+    // Display the results or use them as needed
+    console.log(Pcu);
+    alert("Copper Loss (Pcu) is " + Pcu.toFixed(2) + " W");
+}
+
+// Method to calculate Φ / ΦMax
+getPhi() {
+    // Retrieve values from input elements
+    let v2 = this.data.v2;
+    let f = this.data.f;
+    let n2 = this.data.n2;
+    let Phi = this.data.Phi;
+
+    // Calculate Φ / ΦMax
+    let phiRatio = v2 / (4.44 * f * n2 * Phi);
+
+    // Display the result or use it as needed
+    alert("Φ / ΦMax is " + phiRatio.toFixed(2));
+}
+
+// Method to calculate Power Factor
+getPf() {
+    // Retrieve values from input elements
+    let sFL = this.data.sFL;
+    let k = this.data.k;
+    let pf = this.data.pf;
+    let PcuFL = this.data.PcuFL;
+    let Pi = this.data.Pi;
+
+    // Calculate Po, Pcu, and Efficiency (η)
+    let Po = sFL * k * pf;
+    let Pcu = k !== 1 ? k ** 2 * PcuFL : PcuFL;
+    let eff = (Po / (Po + Pi + Pcu));
+
+    // Calculate Power Factor
+    let powerFactor = Math.cos(Math.acos(eff));
+
+    // Display the result or use it as needed
+    alert("Power Factor is " + powerFactor.toFixed(2));
+}
+
+}
+
+// Create an instance of the Transformer class
+const transformerInstance = new Transformer();
+

@@ -6,82 +6,144 @@
     <title>Document</title>
 
     <link rel="stylesheet" href="bootstrap.min.css">     <!--  ------- bootstrap css --------- -->
+    <link rel="stylesheet" href="main.css">
 
 </head>
 <body class="container mt-4">
     <h2 class="mb-4">Enter Transformer Parameters:</h2>
 
-    <!-- Transformer Rating (value of S) -->
     <div class="row mb-3">
-        <div class="col-md-3">
-            <label for="transformerRating">Transformer Rating (S): </label>
-        </div>
+        <!--  Transformer Rating (S) -->
         <div class="col-md-6">
+            <label for="transformerRating">Transformer Rating (S): </label>
             <input type="text" class="form-control" id="transformerRating">
         </div>
-    </div>
 
-    <!-- Power Factor (pf) -->
-    <div class="row mb-3">
-        <div class="col-md-3">
-            <label for="powerFactor">Power Factor (pf): </label>
-        </div>
+        <!--  Power Factor (pf) -->
         <div class="col-md-6">
+            <label for="powerFactor">Power Factor (pf): </label>
             <input type="text" class="form-control" id="powerFactor">
         </div>
     </div>
 
-    <!-- Load Capacity (k) -->
     <div class="row mb-3">
-        <div class="col-md-3">
-            <label for="loadCapacity">Load Capacity (k): </label>
-        </div>
+        <!--  Load Capacity (k) -->
         <div class="col-md-6">
+            <label for="loadCapacity">Load Capacity (k): </label>
             <input type="text" class="form-control" id="loadCapacity">
         </div>
-    </div>
 
-    <!-- Turns Ratio (a) -->
-    <!-- <div class="row mb-3">
-        <div class="col-md-3">
-            <label for="turnsRatio">Turns Ratio (a): </label>
-        </div>
+        <!--  Copper Loss (Pcu) -->
         <div class="col-md-6">
-            <input type="text" class="form-control" id="turnsRatio">
-        </div>
-        <div class="col-md-3">
-            <button class="btn btn-primary" onclick="getEff()">Calculate</button>
-        </div>
-    </div> -->
-
-    <!-- Copper Loss (Pcu) -->
-    <div class="row mb-3">
-        <div class="col-md-3">
             <label for="copperLoss">Copper Loss (Pcu): </label>
-        </div>
-        <div class="col-md-6">
             <input type="text" class="form-control" id="copperLoss">
         </div>
     </div>
 
     <div class="row mb-3">
-        <div class="col-md-3">
-            <label for="ironLoss">Iron Loss (Pi): </label>
-        </div>
+        <!--  Iron Loss (Pi) -->
         <div class="col-md-6">
+            <label for="ironLoss">Iron Loss (Pi): </label>
             <input type="text" class="form-control" id="ironLoss">
         </div>
-        <div class="col-md-3">
-            <button class="btn btn-primary" onclick="getEff()">Calculate</button>
+
+        <!--  Turns Ratio (a) -->
+        <div class="col-md-6">
+            <label for="turns">Turns Ratio (a): </label>
+            <input type="text" class="form-control" id="turns">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <!--  Voltages -->
+        <div class="col-md-6">
+            <label for="v1">Primary Voltage: </label>
+            <input type="text" class="form-control" id="v1">
+        </div>
+
+        <div class="col-md-6">
+            <label for="v2">Secondary Voltage: </label>
+            <input type="text" class="form-control" id="v2">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <!--  Resistance -->
+        <div class="col-md-6">
+            <label for="r1">Primary Resistance: </label>
+            <input type="text" class="form-control" id="r1">
+        </div>
+
+        <div class="col-md-6">
+            <label for="r2">Secondary Resistance: </label>
+            <input type="text" class="form-control" id="r2">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <!--  Efficiency -->
+        <div class="col-md-6">
+            <label for="eff1">Efficiency: </label>
+            <input type="text" class="form-control" id="eff1">
+        </div>
+
+        <div class="col-md-6">
+            <label for="fq">Frequency: </label>
+            <input type="text" class="form-control" id="fq">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <!--  Currents -->
+        <div class="col-md-6">
+            <label for="i1">Primary Current: </label>
+            <input type="text" class="form-control" id="i1">
+        </div>
+
+        <div class="col-md-6">
+            <label for="i2">Secondary Current: </label>
+            <input type="text" class="form-control" id="i2">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <!--  power -->
+        <div class="col-md-6">
+            <label for="Io">Current (No Load): </label>
+            <input type="text" class="form-control" id="Io">
+        </div>
+        <div class="col-md-6">
+            <label for="Po">Power Output: </label>
+            <input type="text" class="form-control" id="Po">
+        </div>
+
+    </div>
+
+    <div class="row mb-3 mt20">
+        <!-- Centered Button to Calculate -->
+        <div class="col-md-12 text-center mt20">
+            <button class="btn btn-primary" onclick="transformerInstance.getData(); transformerInstance.getEff()">Calculate Efficiency</button>
+            <button class="btn btn-primary" onclick="transformerInstance.getData(); transformerInstance.getEffMax()">Calculate &eta;<sub>Max</sub></button>
+            <button class="btn btn-primary" onclick="transformerInstance.getData(); transformerInstance.getCurrent()">Calculate Current</button>
+        </div>
+        <div class="col-md-12 text-center mt20">
+            <button class="btn btn-primary" onclick="transformerInstance.getData(); transformerInstance.getPowerLosses()">Calculate Power Lossess (P<sub>cu</sub>), (P<sub>i</sub>)</button>
+            <button class="btn btn-primary" onclick="transformerInstance.getData(); transformerInstance.getPhi()">Calculate &phi; / &Phi;<sub>Max</sub></button>
+            <button class="btn btn-primary" onclick="transformerInstance.getData(); transformerInstance.getPf()">Calculate Power Factor</button>
+        </div>
+        <div class="col-md-12 text-center mt20">
+            <button class="btn btn-primary" onclick="transformerInstance.getData(); transformerInstance.getEff()"></button>
         </div>
     </div>
 
 
 
-<!-- Include Bootstrap JS and Popper.js -->
-<script src="bootstrap.bundle.min.js"></script>     <!-- ------ bootstrap js --------- -->
 
 
-<script src="main.js"></script>   
+    <script src="jquery-3.7.1.min.js"></script>         <!-- ------ JQuery js ------- -->
+
+    <script src="bootstrap.bundle.min.js"></script>     <!-- ------ bootstrap js --------- -->
+
+    <script src="main.js"></script>   
 </body>
 </html>
